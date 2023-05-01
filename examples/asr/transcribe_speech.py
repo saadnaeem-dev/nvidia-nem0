@@ -150,9 +150,9 @@ class ModelChangeConfig:
 #     model_change: ModelChangeConfig = ModelChangeConfig()
 
 @dataclass
-class TranscriptionConfig:
+class SttEnFastConformerCtcLarge:
     # Required configs
-    model_path: Optional[str] = r"C:\\Users\saadn\\.cache\\huggingface\\hub\\conformer-ctc-fast\\stt_en_squeezeformer_ctc_xsmall_ls.nemo"  # Path to a .nemo file
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_ctc_large.nemo"
     audio_dir: Optional[str] =r"C:\\Users\\saadn\\PycharmProjects\\DATA" # Path to a directory which contains audio files
     if os.path.isdir(audio_dir):
         create_dir = "Transcripts"
@@ -171,15 +171,15 @@ class TranscriptionConfig:
 
     # General configs
 
-    output_filename: Optional[str] = "transcripts.json"
-    batch_size: int = 3
+    output_filename: Optional[str] = "SttEnFastConformerCtcLarge.json"
+    batch_size: int = 5
     num_workers: int = 0
     # Set `cuda` to int to define CUDA device. If 'None', will look for CUDA
     # device anyway, and do inference on CPU only if CUDA device is not found.
     # If `cuda` is a negative number, inference will be on CPU only.
     cuda: Optional[int] = None
     append_pred: bool = False  # Sets mode of work, if True it will add new field transcriptions.
-    pred_name_postfix: Optional[str] = "ctc_fast_conformer_"  # If you need to use another model name, rather than standard one.
+    pred_name_postfix: Optional[str] = None  # If you need to use another model name, rather than standard one.
     random_seed: Optional[int] = None  # seed number going to be used in seed_everything()
 
     # Set to True to output greedy timestamp information (only supported models)
@@ -187,7 +187,6 @@ class TranscriptionConfig:
 
     # Set to True to output language ID information
     compute_langs: bool = False
-
 
     allow_mps: bool = False  # allow to select MPS device (Apple Silicon M-series GPU)
     amp: bool = False
@@ -207,11 +206,47 @@ class TranscriptionConfig:
 
     # Use this for model-specific changes before transcription
     model_change: ModelChangeConfig = ModelChangeConfig()
+@dataclass
+class SttEnFastConformerTransducerLarge(SttEnFastConformerCtcLarge):
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_transducer_large.nemo"  # Path to a .nemo file
+    output_filename: Optional[str] = "SttEnFastConformerTransducerLarge.json"
 
+@dataclass
+class SttEnFastConformerTransducerLarge(SttEnFastConformerCtcLarge):
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_transducer_large.nemo"  # Path to a .nemo file
+    output_filename: Optional[str] = "SttEnFastConformerTransducerLarge.json"
+@dataclass
+class Stt_EnFastConformerTransducerLargeLs(SttEnFastConformerCtcLarge):
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_transducer_large_ls.nemo"  # Path to a .nemo file
+    output_filename: Optional[str] = "stt_en_fastconformer_transducer_large_ls.json"
+@dataclass
+class SttEnSqueezeFormerCtcMediumLs(SttEnFastConformerCtcLarge):
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_squeezeformer_ctc_medium_ls.nemo"  # Path to a .nemo file
+    output_filename: Optional[str] = "stt_en_squeezeformer_ctc_medium_ls.json"
+@dataclass
+class SttEnSqueezeFormerCtcSmallMediumLs(SttEnFastConformerCtcLarge):
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_squeezeformer_ctc_small_medium_ls.nemo"  # Path to a .nemo file
+    output_filename: Optional[str] = "stt_en_squeezeformer_ctc_small_medium_ls.json"
 
-@hydra_runner(config_name="TranscriptionConfig", schema=TranscriptionConfig)
-def main(cfg: TranscriptionConfig) -> TranscriptionConfig:
+@dataclass
+class SttEnSqueezeFormerCtcXsmallLs(SttEnFastConformerCtcLarge):
+    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_squeezeformer_ctc_xsmall_ls.nemo"  # Path to a .nemo file
+    output_filename: Optional[str] = "stt_en_squeezeformer_ctc_xsmall_ls.json"
+
+"""
+Configs:
+SttEnFastConformerCtcLarge [X]
+SttEnFastConformerTransducerLarge [X]
+SttEnFastConformerTransducerLarge [X]
+Stt_EnFastConformerTransducerLargeLs [X]
+SttEnSqueezeFormerCtcMediumLs [X]
+SttEnSqueezeFormerCtcSmallMediumLs
+SttEnSqueezeFormerCtcXsmallLs
+"""
+@hydra_runner(config_name="SttEnSqueezeFormerCtcXsmallLs", schema=SttEnSqueezeFormerCtcXsmallLs)
+def main(cfg: SttEnSqueezeFormerCtcXsmallLs) -> SttEnSqueezeFormerCtcXsmallLs:
     logging.info(f'Hydra config: {OmegaConf.to_yaml(cfg)}')
+    stat = time.time()
 
     if is_dataclass(cfg):
         cfg = OmegaConf.structured(cfg)
@@ -231,33 +266,33 @@ def main(cfg: TranscriptionConfig) -> TranscriptionConfig:
         augmentor = eval_config.test_ds.get("augmentor")
         logging.info(f"Will apply on-the-fly augmentation on samples during transcription: {augmentor} ")
 
-    # setup GPU
-    if cfg.cuda is None:
-        if torch.cuda.is_available():
-            device = [0]  # use 0th CUDA device
-            accelerator = 'gpu'
-            map_location = torch.device('cuda:0')
-        elif cfg.allow_mps and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-            logging.warning(
-                "MPS device (Apple Silicon M-series GPU) support is experimental."
-                " Env variable `PYTORCH_ENABLE_MPS_FALLBACK=1` should be set in most cases to avoid failures."
-            )
-            device = [0]
-            accelerator = 'mps'
-            map_location = torch.device('mps')
-        else:
-            device = 1
-            accelerator = 'cpu'
-            map_location = torch.device('cpu')
-    else:
-        device = [cfg.cuda]
-        accelerator = 'gpu'
-        map_location = torch.device(f'cuda:{cfg.cuda}')
-    #
+    # # setup GPU
+    # if cfg.cuda is None:
+    #     if torch.cuda.is_available():
+    #         device = [0]  # use 0th CUDA device
+    #         accelerator = 'gpu'
+    #         map_location = torch.device('cuda:0')
+    #     elif cfg.allow_mps and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+    #         logging.warning(
+    #             "MPS device (Apple Silicon M-series GPU) support is experimental."
+    #             " Env variable `PYTORCH_ENABLE_MPS_FALLBACK=1` should be set in most cases to avoid failures."
+    #         )
+    #         device = [0]
+    #         accelerator = 'mps'
+    #         map_location = torch.device('mps')
+    #     else:
+    #         device = 1
+    #         accelerator = 'cpu'
+    #         map_location = torch.device('cpu')
+    # else:
+    #     device = [cfg.cuda]
+    #     accelerator = 'gpu'
+    #     map_location = torch.device(f'cuda:{cfg.cuda}')
 
-    # device = 1
-    # accelerator = 'cpu'
-    # map_location = torch.device('cpu')
+
+    device = 1
+    accelerator = 'cpu'
+    map_location = torch.device('cpu')
 
 
     logging.info(f"Inference will be done on device: {map_location}")
@@ -385,12 +420,18 @@ def main(cfg: TranscriptionConfig) -> TranscriptionConfig:
         compute_timestamps=compute_timestamps,
     )
     logging.info(f"Finished writing predictions to {output_filename}!")
+    logging.info(f"Total time taken: {time.time() - stat} seconds")
+    # append above statement to output_filename.json
+    with open(output_filename, 'a') as f:
+        f.write(f"\n CPU  Total time taken: {time.time() - stat} seconds")
 
     return cfg
 
 
 if __name__ == '__main__':
-    main()  # noqa pylint: disable=no-value-for-parameter
+    main()
+
+
 
 
     """

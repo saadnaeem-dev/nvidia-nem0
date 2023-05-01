@@ -1,0 +1,142 @@
+from nemo.collections.asr.metrics.wer import word_error_rate
+reference = [
+    "i'm good thank you shoo gore yes i an intuent courch for macca i have recovered et hundred peruson payment permissions with a young insurance oke shu that's sound a god thing carrying you me a clok for the coach you offered shou i'm going to pay four hundred dollars amount that sounds good can i think of moty them get b you o ke thank you for your time i will get them the comte to your offer in a good day",
+    "hay i'm not wondering if i could book an appointment for a hair cuf i was thinking about next thurday at two p m would that be available gregg can i please book that for me ah my name is jenafer sure my fn number is four one five five one three one one three nine now that's all thank you",
+    "good morning think of her calling dry inrundsalon this is mad speaking i may i assure you to day of course i'd be happy to help you with that kin it please tell me the date and the time that works for you ah let me check our schedule for you yet we have an opening for a hair cut at two p m next thursdays certainly may i have your name please a perfect jenfor i have booked you in a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jenfor will look forward to seeing you next thursday have a great day",
+    "s nooon this is so the speaking how may i help you a kiss her could you please provide me with boody gills ah this is because during the night there' is a lot of more traffic o kas my supicion is to sgnd you a new rout that will be more powerful i will inform aur technical team to visit you and implement a new router kiss could you please provide me with your address mister yondem thank you would you would but next tuesday at tree p m s would you thanks for your call mister yondam have a nice day theing you should haend the call we",
+    "heather solves my name is ing yon them and i'm calling because we have issues with our initiate connection sure doing to day our intenc is best but doing to night's the connection is very bad what could you what could kalls death what we should do in this case this sounds great okaye it's bar sitre pandic stumble yes it's fine i'll be at home at that time thank you for your time sauls thanks by okaye"
+]
+concatenated_string = " ".join(reference)
+reference = [concatenated_string]
+
+model_names=[]
+# --------- stt_en_fastconformer_transducer_large_ls--------------------
+model_name = "stt_en_fastconformer_transducer_large_ls"
+dict_list = [
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "all i am good soon good yes i have to encounter my task i have so clever to be termed a person payment premiums to die out insurance o king that sounds interesting can you give me a court for to coate you i am going to pay four hundred dollars it sounds good can i think of what he doesn't guess that you o kane for your time i will listen to your offer and the great thing"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "i wondering if i could look an appointment for a hair cut i was thinking about next thursday at two p m would that be available graham can please book that on me ah my name is genafer my sole number is four one five one three one to nine no that's all thank you"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in running salon this is that speaking how may i ask you see to day of course i'd be happy to help you with that can you please tell me the date and the time that works for you ah let me take our schedule for you yet we have an opening for the hair cut at two p m next thursday certainly may i have your name please a perfect jonoffer i have booked you a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jonather will look forward to see you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "the moon this is so the speaking how may i help you kiss her can you please provide me with booty ah this is because during the night there is a lot of moor traffic my suspicion is to send you a new router that will be more powerful i will inform our technical scheme to visit you and implinment a new router could you please provide me with your address mister yonden thank you would next you say at epithet would you thanks for your call miss yonder have an i stay then you should end the callers with"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hellas my name is moved in yon and i am collink because we have issues with our infancy connexion sure during the day our infanic is first but during the night the connexion is very dead what could you what could cause that what we should do in this case this sounds great o kay its bar secret panic ismble yes it's one i will be at home at that time thank you for your time sold thanks i can"}
+]
+stt_en_fastconformer_transducer_large_ls_hypothesis = [d["pred_text"] for d in dict_list]
+
+concatenated_string = " ".join(stt_en_fastconformer_transducer_large_ls_hypothesis)
+model_text_name = [[concatenated_string],model_name]
+model_names.append(model_text_name)
+
+# --------- stt_en_squeezeformer_ctc_medium_ls--------------------
+model_name = "stt_en_squeezeformer_ctc_medium_ls"
+dict_list = [
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "i'm good thank you shoo gore yes i an intuent courch for macca i have recovered et hundred peruson payment premions with a young insuance oke shu that's sound a god thing carrying you me a clok for the coach you offered shou i'm going to pay four hundred dollars amout that sounds good can i think of moty them get b you o ke thank you for your time i will get them the comte to your offer in a goot day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hay i'm not wondering if i could book an appointment for a hair cuf i was thinking about next thurday at two p m would that be available gregg can i please book that for me ah my name is jenafer sure my fn number is four one five five one three one one three nine now that's all thank you"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry inrundsalon this is mad speaking i may i assue you to day of course i'd be happy to help you with that kin it please tell me the date and the time that works for you ah let me check our schedule for you yet we have an opening for a hair cut at two p m next thursdays certainly may i have your name please a perfect jenfor i have booked you in a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jenfor will look forward to seeing you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "s nooon this is so the speaking how may i help you a kiss her coul you please provide me with boody gills ah this is because during the niight there' is a lot of more traffic o kas my supicion is to sgnd you a new rout that will be more powerful i will inform aur technical team to visit you and implement a new router kiss could you please provide me with your address mister yondem thank you would you would but next tuesday at tree p m s would you thanks for your call mister yondam have a nice day theing you should haend the call we"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "heathersolves my name is ing yon them and i'm coling because we have issues with our intanite conniction sure doing to day our intenc is best but doing to night's the conniction is very bad what could you what could kalls death what we should do in this case this sounds great okaye it's bar sitre pandic stumble yes it's fine i'll be at home at that time thank you for your time sauls thanks by okaye"}
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+
+# --------- stt_en_squeezeformer_ctc_small_medium_ls--------------------
+model_name = "stt_en_squeezeformer_ctc_small_medium_ls"
+dict_list = [
+
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "thk i'm good think you so goh yes i cany soonscoage from my cak i have s covered eight hundred person payment premiums all's insurance oku sir that soundth interesting can you give me a cut for the cowarge you offered sir i'm toing to pay four hundred dollars a month that sounds good can i think of wat you doan get b too ok thinty for your tipe i will desen the coster your offer e thegate day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "a i am wondering if i could book in appointment for a hair cup i was thinking about next thurday at two p m would that be available grace can please loook that for me and my name is  genifer sure my whole number is four one five five month three one one three nine no that's all thank you it"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in ronsalon this is me speaking i may sus you to day of course id be happy to help you with that can it please tell me the date and the time that works for you ah let me chacke our schedule for you yes we have an opening for an hair cut at two p m next thursdays certainly may i have your name please ah perfect jenfer i have booked you an hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcom jeniter will look forward to see you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "the noon this is so the speaking how may i help you kasir could you please provide me with boytils this is because doing the nice there's a lot of more traffic o kase my sufficient is to sign you a new router that will be more powerful i will inform our technical teme to visit you and emblement the new router kis could you please provide me with your address mister yndham thank you would you what next w say at three p ms would you thanks for your called mister youdam have a nice day then you retan the callz with"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hel us aveds my name is meeting yonderm and i am calling because we have issued with our intenite conniction sure during the day our intenit is fst but during the night the connection is well bad what could you what could cause that what we should do in this case this sounds great o k its barst treat pandic is stumble yes its fine i will be at home at that time thank you for your time sot thanks by o kane"}
+
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+
+# --------- stt_en_squeezeformer_ctc_medium_ls--------------------
+model_name = "stt_en_squeezeformer_ctc_medium_ls"
+dict_list = [
+
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "i'm good thank you shoo gore yes i an intuent courch for macca i have recovered et hundred peruson payment premions with a young insuance oke shu that's sound a god thing carrying you me a clok for the coach you offered shou i'm going to pay four hundred dollars amout that sounds good can i think of moty them get b you o ke thank you for your time i will get them the comte to your offer in a goot day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hay i'm not wondering if i could book an appointment for a hair cuf i was thinking about next thurday at two p m would that be available gregg can i please book that for me ah my name is jenafer sure my fn number is four one five five one three one one three nine now that's all thank you"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry inrundsalon this is mad speaking i may i assue you to day of course i'd be happy to help you with that kin it please tell me the date and the time that works for you ah let me check our schedule for you yet we have an opening for a hair cut at two p m next thursdays certainly may i have your name please a perfect jenfor i have booked you in a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jenfor will look forward to seeing you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "s nooon this is so the speaking how may i help you a kiss her coul you please provide me with boody gills ah this is because during the niight there' is a lot of more traffic o kas my supicion is to sgnd you a new rout that will be more powerful i will inform aur technical team to visit you and implement a new router kiss could you please provide me with your address mister yondem thank you would you would but next tuesday at tree p m s would you thanks for your call mister yondam have a nice day theing you should haend the call we"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "heathersolves my name is ing yon them and i'm coling because we have issues with our intanite conniction sure doing to day our intenc is best but doing to night's the conniction is very bad what could you what could kalls death what we should do in this case this sounds great okaye it's bar sitre pandic stumble yes it's fine i'll be at home at that time thank you for your time sauls thanks by okaye"},
+
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+
+# --------- stt_en_squeezeformer_ctc_small_medium_ls--------------------
+model_name = "stt_en_squeezeformer_ctc_small_medium_ls"
+dict_list = [
+
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "thk i'm good think you so goh yes i cany soonscoage from my cak i have s covered eight hundred person payment premiums all's insurance oku sir that soundth interesting can you give me a cut for the cowarge you offered sir i'm toing to pay four hundred dollars a month that sounds good can i think of wat you doan get b too ok thinty for your tipe i will desen the coster your offer e thegate day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "a i am wondering if i could book in appointment for a hair cup i was thinking about next thurday at two p m would that be available grace can please loook that for me and my name is  genifer sure my whole number is four one five five month three one one three nine no that's all thank you it"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in ronsalon this is me speaking i may sus you to day of course id be happy to help you with that can it please tell me the date and the time that works for you ah let me chacke our schedule for you yes we have an opening for an hair cut at two p m next thursdays certainly may i have your name please ah perfect jenfer i have booked you an hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcom jeniter will look forward to see you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "the noon this is so the speaking how may i help you kasir could you please provide me with boytils this is because doing the nice there's a lot of more traffic o kase my sufficient is to sign you a new router that will be more powerful i will inform our technical teme to visit you and emblement the new router kis could you please provide me with your address mister yndham thank you would you what next w say at three p ms would you thanks for your called mister youdam have a nice day then you retan the callz with"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hel us aveds my name is meeting yonderm and i am calling because we have issued with our intenite conniction sure during the day our intenit is fst but during the night the connection is well bad what could you what could cause that what we should do in this case this sounds great o k its barst treat pandic is stumble yes its fine i will be at home at that time thank you for your time sot thanks by o kane"}
+
+
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+
+
+# --------- stt_en_squeezeformer_ctc_xsmall_ls--------------------
+model_name = "stt_en_squeezeformer_ctc_xsmall_ls"
+dict_list = [
+
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "his so and g pinko shu god yes i any surecot for my caf if cover to be hundred person payment premium fe ianysuren oke sho that sound thing can you give me a court for the cowage you offeren shu i'mjured to pa four hundred dollar semon the sas good can i think in what is don get b to you oke thank you for your pi i will detm thecoster your ofer and thegat the"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "i i wdering if i could book in appointment for a haar cuck i was thinking a bll next thursday at two p would that be alaisable great please wok that for me a my name is deinefer sure my to number is four one five five mon three onn onn three nine no that'soll thank you e"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in ransalon this is me speaking ame as you see to day of course i be happy to help you with that can it please tell me the date and the time that works for you ah let me take our schedule for you yet we have an opening for an hair cut at two p m next thursdays certainly may i have your name please ah perfect enefer i have booked you and hair cut at two p m nextursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact in formation on file is there anything else i can help you out with to day your loelcomejenefer will look forward to see you nextursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "non this is so speaking how may i help you casir cll you please provide me with botils ah this is because doing the nis there is a lot of more praffic o case for my sufficient is to saen you a new uter that will be more powerful i will inform myur tetnicl tem to visit you an implement that new router iif could you please provide me with your address monsi ondem thank you woud to w wa next you sy a de pi ms wout you thank for your call moseandem have an i stay ding you return the calls with"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "he oselves my name is meet nundam and i am calling because we the issues with our intenite conniction should during the day our intenity is fed but doing the nights the conniction is were bed what could you what could call dea what we should do in the stage this sounds grade oke its bars to treat pandig stumb yes spine i will be at home at that time thank you for your time sos thank by okin"}
+
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+# --------- SttEnFastConformerCtcLarge--------------------
+model_name = "SttEnFastConformerCtcLarge"
+dict_list = [
+
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "hello i'm good thank you sure go ahead yes i have insurance coverage for my car i have full coverage with hundred person payment premiums with a insurance okay sure that sounds interesting can you give me a quote for the coverage you are offering sure i'm currently paying four hundred dollars a month that sounds good can i think about it then get back to you okay thank you for your time i will definitely consider your offer have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hi i was wondering if i could book an appointment for a haircut i was thinking about next thursday at two p m will that be available great can you please book that for me uh my name is jennifer sure my phone number is four one five five one three one one three nine no that's all thank you"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning thank you for calling dry en run salon this is matt speaking how may i assist you today of course i'd be happy to help you with that can you please tell me the date and the time that works for you ah let me check our schedule for you yeah we have an opening for an haircut at two p m next thursday certainly may i have your name please ah perfect jennifer i have booked you in a haircut at two p m next thursday may i have your phone number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with today you're welcome jennifer we look forward to seeing you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "this is so the speaking how may i help you ok sir could you please provide me with bo details this is because during the nights there's a lot of more traffic ok so my suffient is to send you a new router that will be more powerful i will inform our technical team to visit you and implement a new router could you please provide me with your address mr you on them thank you would what next tuesday at three p m suit you thanks for your call miss on them have a nice day think you should end the call as well"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hello sul my name is moon and i'm calling because we have issues with our internet connection sure during the day our internet is fast but during the night the connection is very bad what could you what could cause that what we should do in this case this sounds great ok it's bar city treat paendic istanbul yes it's fine i will be at home at that time thank you for your time so thanks by okay"}
+
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+
+
+# --------- SttEnFastConformerTransducerLarge--------------------
+model_name = "SttEnFastConformerTransducerLarge"
+dict_list = [
+
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "hello i'm good thank you sure go ahead yes i have insurance coverage for my car i have full coverage with hundred percent payment premiums with aliens insurance okay sure that sounds interesting can you give me a quote for the coverage you are offering sure i'm trying to pay four hundred dollars a month good can i think about it and get back to ok thank you for your time i will definitely consider your offer and a great"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hi i was wondering if i could book an appointment for a haircut i was thinking about next thursday at two p m would that be available for me my name is jennifer my phone number is four one five one three one one three nine"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning thank you for calling dry enron salon this is matt speaking how may i assist you today of course i'd be happy to help you with that can you please tell me the date and the time that works for you let me check our schedule for you yeah we have an opening for a haircut at two p m next thursday certainly may i have your name please perfect jennifer i have booked you a haircut at two p m next thursday may i have your phone number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with today you're welcome jennifer we'll look forward to seeing you next thursday have a great day"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "this is so the speaking i help you can you please provide me with body bills this is because during the knife there's a lot of more traffic my sufficient is to send you a new router that will be more powerful i will inform our technical team to visit you and implement a new route could you please provide me with your address mr yonder thank you next tuesday pm for your call missing on them have a nice day should and the call as well"},
+{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hello my name is and i'm calling because we have issues with our internet connection sure during the day our internet is fast but during tonight the connection is very bad what could you what could cause that what we should do in this case panic istanbul yes it's fine i will be at home at that time thank you for your time thanks"}
+
+]
+concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
+model_text_name = [[concatenated_string], model_name]
+model_names.append(model_text_name)
+
+wer = []
+for model_name in model_names:
+    wer = word_error_rate(hypotheses=model_name[0], references=reference)
+# create a pandas dataframe with two columns model name and wer and append it to the csv file
