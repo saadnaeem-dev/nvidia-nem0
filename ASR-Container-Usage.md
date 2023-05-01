@@ -28,3 +28,20 @@ docker run --rm -it --gpus all \
     -v /path/to/output/csv:/output \
     nemo-stt-transcriber --input /input --model_path /model --output /output/transcripts.csv
 ````
+
+````
+docker build --build-arg ARG_NAME=value -t IMAGE_NAME:TAG DIRECTORY
+docker build -t nvidia-ngc-nemo --build-arg REQUIRE_AIS_CLI=true 
+docker build --build-arg REQUIRE_AIS_CLI=true -t nvidia-ngc-nemo . 
+````
+
+````
+docker run -it --rm <image_name> /path/to/script arg1 arg2 arg3
+docker run -it --rm nvidia-ngc-nemo python transcribe_speech.py --model_path /model --audio_dir /input --output_filename /output/transcripts.csv
+````
+
+````
+docker run -it --rm <image_name> /path/to/script arg1 arg2 arg3
+
+docker run -it --rm <image_name> /path/to/script arg1 arg2 arg3
+````

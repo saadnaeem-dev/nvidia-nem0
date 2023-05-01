@@ -20,7 +20,7 @@ from typing import Optional, Union
 import pytorch_lightning as pl
 import torch
 from omegaconf import OmegaConf
-import time
+
 from nemo.collections.asr.metrics.rnnt_wer import RNNTDecodingConfig
 from nemo.collections.asr.metrics.wer import CTCDecodingConfig
 from nemo.collections.asr.models.ctc_models import EncDecCTCModel
@@ -47,7 +47,7 @@ Transcribe audio file on a single CPU/GPU. Useful for transcription of moderate 
 
   compute_timestamps: Bool to request greedy time stamp information (if the model supports it)
   compute_langs: Bool to request language ID information (if the model supports it)
-  
+
   (Optionally: You can limit the type of timestamp computations using below overrides)
   ctc_decoding.ctc_timestamp_type="all"  # (default all, can be [all, char, word])
   rnnt_decoding.rnnt_timestamp_type="all"  # (default all, can be [all, char, word])
@@ -65,7 +65,7 @@ Transcribe audio file on a single CPU/GPU. Useful for transcription of moderate 
   audio_type: Str filetype of the audio. Supported = wav, flac, mp3
 
   overwrite_transcripts: Bool which when set allows repeated transcriptions to overwrite previous results.
-  
+
   ctc_decoding: Decoding sub-config for CTC. Refer to documentation for specific values.
   rnnt_decoding: Decoding sub-config for RNNT. Refer to documentation for specific values.
 
@@ -90,78 +90,20 @@ python transcribe_speech.py \
     append_pred=False \
     pred_name_postfix="<remove or use another model name for output filename>"
 """
-# python my_script.py --arg1 value1 --arg2 value2
+
 
 @dataclass
 class ModelChangeConfig:
-
     # Sub-config for changes specific to the Conformer Encoder
     conformer: ConformerChangeConfig = ConformerChangeConfig()
 
 
-# @dataclass
-# class TranscriptionConfig:
-#     # Required configs
-#     model_path: Optional[str] = r"C:\\Users\saadn\\.cache\\huggingface\\hub\\conformer-ctc-fast\\stt_en_fastconformer_ctc_large.nemo"  # Path to a .nemo file
-#     audio_dir: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\DATA"  # Path to a directory which contains audio files
-#     pretrained_name: Optional[str] = None  # Name of a pretrained model
-#     dataset_manifest: Optional[str] = None  # Path to dataset's JSON manifest
-#     channel_selector: Optional[
-#         Union[int, str]
-#     ] = None  # Used to select a single channel from multichannel audio, or use average across channels
-#     audio_key: str = 'audio_filepath'  # Used to override the default audio key in dataset_manifest
-#     eval_config_yaml: Optional[str] = None  # Path to a yaml file of config of evaluation
-#
-#     # General configs
-#     output_filename: Optional[str] = None
-#     batch_size: int = 32
-#     num_workers: int = 0
-#     append_pred: bool = False  # Sets mode of work, if True it will add new field transcriptions.
-#     pred_name_postfix: Optional[str] = None  # If you need to use another model name, rather than standard one.
-#     random_seed: Optional[int] = None  # seed number going to be used in seed_everything()
-#
-#     # Set to True to output greedy timestamp information (only supported models)
-#     compute_timestamps: bool = False
-#
-#     # Set to True to output language ID information
-#     compute_langs: bool = False
-#
-#     # Set `cuda` to int to define CUDA device. If 'None', will look for CUDA
-#     # device anyway, and do inference on CPU only if CUDA device is not found.
-#     # If `cuda` is a negative number, inference will be on CPU only.
-#     cuda: Optional[int] = None
-#     allow_mps: bool = False  # allow to select MPS device (Apple Silicon M-series GPU)
-#     amp: bool = False
-#     audio_type: str = "wav"
-#
-#     # Recompute model transcription, even if the output folder exists with scores.
-#     overwrite_transcripts: bool = True
-#
-#     # Decoding strategy for CTC models
-#     ctc_decoding: CTCDecodingConfig = CTCDecodingConfig()
-#
-#     # Decoding strategy for RNNT models
-#     rnnt_decoding: RNNTDecodingConfig = RNNTDecodingConfig(fused_batch_size=-1)
-#
-#     # decoder type: ctc or rnnt, can be used to switch between CTC and RNNT decoder for Joint RNNT/CTC models
-#     decoder_type: Optional[str] = None
-#
-#     # Use this for model-specific changes before transcription
-#     model_change: ModelChangeConfig = ModelChangeConfig()
-
 @dataclass
-class SttEnFastConformerCtcLarge:
+class TranscriptionConfig:
     # Required configs
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_ctc_large.nemo"
-    audio_dir: Optional[str] =r"C:\\Users\\saadn\\PycharmProjects\\DATA" # Path to a directory which contains audio files
-    if os.path.isdir(audio_dir):
-        create_dir = "Transcripts"
-        if os.path.isdir(create_dir):
-            os.rmdir(create_dir)
-            curr_wr_dir = os.getcwd()
-            os.chdir(audio_dir)
-            os.mkdir(create_dir)
-            os.chdir(curr_wr_dir)
+    model_path: Optional[str] = None  # Path to a .nemo file
+    pretrained_name: Optional[str] = None  # Name of a pretrained model
+    audio_dir: Optional[str] = None  # Path to a directory which contains audio files
     dataset_manifest: Optional[str] = None  # Path to dataset's JSON manifest
     channel_selector: Optional[
         Union[int, str]
@@ -170,14 +112,9 @@ class SttEnFastConformerCtcLarge:
     eval_config_yaml: Optional[str] = None  # Path to a yaml file of config of evaluation
 
     # General configs
-
-    output_filename: Optional[str] = "SttEnFastConformerCtcLarge.json"
-    batch_size: int = 5
+    output_filename: Optional[str] = None
+    batch_size: int = 32
     num_workers: int = 0
-    # Set `cuda` to int to define CUDA device. If 'None', will look for CUDA
-    # device anyway, and do inference on CPU only if CUDA device is not found.
-    # If `cuda` is a negative number, inference will be on CPU only.
-    cuda: Optional[int] = None
     append_pred: bool = False  # Sets mode of work, if True it will add new field transcriptions.
     pred_name_postfix: Optional[str] = None  # If you need to use another model name, rather than standard one.
     random_seed: Optional[int] = None  # seed number going to be used in seed_everything()
@@ -188,6 +125,10 @@ class SttEnFastConformerCtcLarge:
     # Set to True to output language ID information
     compute_langs: bool = False
 
+    # Set `cuda` to int to define CUDA device. If 'None', will look for CUDA
+    # device anyway, and do inference on CPU only if CUDA device is not found.
+    # If `cuda` is a negative number, inference will be on CPU only.
+    cuda: Optional[int] = None
     allow_mps: bool = False  # allow to select MPS device (Apple Silicon M-series GPU)
     amp: bool = False
     audio_type: str = "wav"
@@ -206,47 +147,11 @@ class SttEnFastConformerCtcLarge:
 
     # Use this for model-specific changes before transcription
     model_change: ModelChangeConfig = ModelChangeConfig()
-@dataclass
-class SttEnFastConformerTransducerLarge(SttEnFastConformerCtcLarge):
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_transducer_large.nemo"  # Path to a .nemo file
-    output_filename: Optional[str] = "SttEnFastConformerTransducerLarge.json"
 
-@dataclass
-class SttEnFastConformerTransducerLarge(SttEnFastConformerCtcLarge):
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_transducer_large.nemo"  # Path to a .nemo file
-    output_filename: Optional[str] = "SttEnFastConformerTransducerLarge.json"
-@dataclass
-class Stt_EnFastConformerTransducerLargeLs(SttEnFastConformerCtcLarge):
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_transducer_large_ls.nemo"  # Path to a .nemo file
-    output_filename: Optional[str] = "stt_en_fastconformer_transducer_large_ls.json"
-@dataclass
-class SttEnSqueezeFormerCtcMediumLs(SttEnFastConformerCtcLarge):
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_squeezeformer_ctc_medium_ls.nemo"  # Path to a .nemo file
-    output_filename: Optional[str] = "stt_en_squeezeformer_ctc_medium_ls.json"
-@dataclass
-class SttEnSqueezeFormerCtcSmallMediumLs(SttEnFastConformerCtcLarge):
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_squeezeformer_ctc_small_medium_ls.nemo"  # Path to a .nemo file
-    output_filename: Optional[str] = "stt_en_squeezeformer_ctc_small_medium_ls.json"
 
-@dataclass
-class SttEnSqueezeFormerCtcXsmallLs(SttEnFastConformerCtcLarge):
-    model_path: Optional[str] = r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_squeezeformer_ctc_xsmall_ls.nemo"  # Path to a .nemo file
-    output_filename: Optional[str] = "stt_en_squeezeformer_ctc_xsmall_ls.json"
-
-"""
-Configs:
-SttEnFastConformerCtcLarge [X]
-SttEnFastConformerTransducerLarge [X]
-SttEnFastConformerTransducerLarge [X]
-Stt_EnFastConformerTransducerLargeLs [X]
-SttEnSqueezeFormerCtcMediumLs [X]
-SttEnSqueezeFormerCtcSmallMediumLs
-SttEnSqueezeFormerCtcXsmallLs
-"""
-@hydra_runner(config_name="SttEnSqueezeFormerCtcXsmallLs", schema=SttEnSqueezeFormerCtcXsmallLs)
-def main(cfg: SttEnSqueezeFormerCtcXsmallLs) -> SttEnSqueezeFormerCtcXsmallLs:
+@hydra_runner(config_name="TranscriptionConfig", schema=TranscriptionConfig)
+def main(cfg: TranscriptionConfig) -> TranscriptionConfig:
     logging.info(f'Hydra config: {OmegaConf.to_yaml(cfg)}')
-    stat = time.time()
 
     if is_dataclass(cfg):
         cfg = OmegaConf.structured(cfg)
@@ -266,34 +171,28 @@ def main(cfg: SttEnSqueezeFormerCtcXsmallLs) -> SttEnSqueezeFormerCtcXsmallLs:
         augmentor = eval_config.test_ds.get("augmentor")
         logging.info(f"Will apply on-the-fly augmentation on samples during transcription: {augmentor} ")
 
-    # # setup GPU
-    # if cfg.cuda is None:
-    #     if torch.cuda.is_available():
-    #         device = [0]  # use 0th CUDA device
-    #         accelerator = 'gpu'
-    #         map_location = torch.device('cuda:0')
-    #     elif cfg.allow_mps and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-    #         logging.warning(
-    #             "MPS device (Apple Silicon M-series GPU) support is experimental."
-    #             " Env variable `PYTORCH_ENABLE_MPS_FALLBACK=1` should be set in most cases to avoid failures."
-    #         )
-    #         device = [0]
-    #         accelerator = 'mps'
-    #         map_location = torch.device('mps')
-    #     else:
-    #         device = 1
-    #         accelerator = 'cpu'
-    #         map_location = torch.device('cpu')
-    # else:
-    #     device = [cfg.cuda]
-    #     accelerator = 'gpu'
-    #     map_location = torch.device(f'cuda:{cfg.cuda}')
-
-
-    device = 1
-    accelerator = 'cpu'
-    map_location = torch.device('cpu')
-
+    # setup GPU
+    if cfg.cuda is None:
+        if torch.cuda.is_available():
+            device = [0]  # use 0th CUDA device
+            accelerator = 'gpu'
+            map_location = torch.device('cuda:0')
+        elif cfg.allow_mps and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+            logging.warning(
+                "MPS device (Apple Silicon M-series GPU) support is experimental."
+                " Env variable `PYTORCH_ENABLE_MPS_FALLBACK=1` should be set in most cases to avoid failures."
+            )
+            device = [0]
+            accelerator = 'mps'
+            map_location = torch.device('mps')
+        else:
+            device = 1
+            accelerator = 'cpu'
+            map_location = torch.device('cpu')
+    else:
+        device = [cfg.cuda]
+        accelerator = 'gpu'
+        map_location = torch.device(f'cuda:{cfg.cuda}')
 
     logging.info(f"Inference will be done on device: {map_location}")
 
@@ -420,23 +319,9 @@ def main(cfg: SttEnSqueezeFormerCtcXsmallLs) -> SttEnSqueezeFormerCtcXsmallLs:
         compute_timestamps=compute_timestamps,
     )
     logging.info(f"Finished writing predictions to {output_filename}!")
-    logging.info(f"Total time taken: {time.time() - stat} seconds")
-    # append above statement to output_filename.json
-    with open(output_filename, 'a') as f:
-        f.write(f"\n CPU  Total time taken: {time.time() - stat} seconds")
 
     return cfg
 
 
 if __name__ == '__main__':
-    main()
-
-
-
-
-    """
-python examples/asr/transcribe_speech.py --model_path r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_ctc_large.nemo" --audio_dir r"C:\\Users\\saadn\\PycharmProjects\\DATA" --output_filename "stt_en_fastconformer_ctc_large.json" --batch_size 3 --cuda 0 --pred_name_postfix "stt_en_fastconformer_ctc_large_" 
-
-python examples/asr/transcribe_speech.py --model_path r"C:\\Users\\saadn\\PycharmProjects\\Nvidia-Nemo-Models\\stt_en_fastconformer_ctc_large.nemo" --audio_dir r"C:\\Users\\saadn\\PycharmProjects\\DATA" --output_filename "stt_en_fastconformer_ctc_large.json" --batch_size 3 --cuda 0 --pred_name_postfix "stt_en_fastconformer_ctc_large_"
-  
-    """
+    main()  # noqa pylint: disable=no-value-for-parameter

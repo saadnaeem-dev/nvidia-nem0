@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../DATA/.idea/DATA.iml" filepath="$PROJECT_DIR$/../DATA/.idea/DATA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Nvidia-Nemo-Models/.idea/Nvidia-Nemo-Models.iml" filepath="$PROJECT_DIR$/../Nvidia-Nemo-Models/.idea/Nvidia-Nemo-Models.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/nvidia-ngc-nemo.iml" filepath="$PROJECT_DIR$/.idea/nvidia-ngc-nemo.iml" />
     </modules>
   </component>
