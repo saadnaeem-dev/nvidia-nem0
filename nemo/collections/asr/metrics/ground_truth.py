@@ -1,142 +1,220 @@
 from nemo.collections.asr.metrics.wer import word_error_rate
+import pandas as pd
 reference = [
-    "i'm good thank you shoo gore yes i an intuent courch for macca i have recovered et hundred peruson payment permissions with a young insurance oke shu that's sound a god thing carrying you me a clok for the coach you offered shou i'm going to pay four hundred dollars amount that sounds good can i think of moty them get b you o ke thank you for your time i will get them the comte to your offer in a good day",
-    "hay i'm not wondering if i could book an appointment for a hair cuf i was thinking about next thurday at two p m would that be available gregg can i please book that for me ah my name is jenafer sure my fn number is four one five five one three one one three nine now that's all thank you",
-    "good morning think of her calling dry inrundsalon this is mad speaking i may i assure you to day of course i'd be happy to help you with that kin it please tell me the date and the time that works for you ah let me check our schedule for you yet we have an opening for a hair cut at two p m next thursdays certainly may i have your name please a perfect jenfor i have booked you in a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jenfor will look forward to seeing you next thursday have a great day",
-    "s nooon this is so the speaking how may i help you a kiss her could you please provide me with boody gills ah this is because during the night there' is a lot of more traffic o kas my supicion is to sgnd you a new rout that will be more powerful i will inform aur technical team to visit you and implement a new router kiss could you please provide me with your address mister yondem thank you would you would but next tuesday at tree p m s would you thanks for your call mister yondam have a nice day theing you should haend the call we",
-    "heather solves my name is ing yon them and i'm calling because we have issues with our initiate connection sure doing to day our intenc is best but doing to night's the connection is very bad what could you what could kalls death what we should do in this case this sounds great okaye it's bar sitre pandic stumble yes it's fine i'll be at home at that time thank you for your time sauls thanks by okaye"
+    "CHAPTER FIVE THE SEAL AND THE BEAR YOU KNOW DOCTOR SAID HATTERAS AS THEY RETURNED TO THE HUT THE POLAR BEARS SUBSIST ALMOST ENTIRELY ON SEALS THEY'LL LIE IN WAIT FOR THEM BESIDE THE CREVASSES FOR WHOLE DAYS. READY TO STRANGLE THEM THE MOMENT THEIR HEADS APPEAR ABOVE THE SURFACE IT IS NOT LIKELY THEN THAT A BEAR WILL BE FRIGHTENED OF A SEAL I THINK I SEE WHAT YOU ARE AFTER BUT IT IS DANGEROUS. YES BUT THERE IS MORE CHANCE OF SUCCESS THAN IN TRYING ANY OTHER PLAN SO I MEAN TO RISK IT I AM GOING TO DRESS MYSELF IN THE SEAL'S SKIN AND CREEP ALONG THE ICE COME DON'T LET US LOSE TIME LOAD THE GUN AND GIVE IT ME. THE DOCTOR COULD NOT SAY ANYTHING FOR HE WOULD HAVE DONE THE SAME HIMSELF SO HE FOLLOWED HATTERAS SILENTLY TO THE SLEDGE TAKING WITH HIM A COUPLE OF HATCHETS FOR HIS OWN AND JOHNSON'S USE HATTERAS SOON MADE HIS TOILETTE AND SLIPPED INTO THE SKIN. NOW THEN GIVE ME THE GUN HE SAID. COURAGE HATTERAS SAID THE DOCTOR HANDING HIM THE WEAPON WHICH HE HAD CAREFULLY LOADED MEANWHILE NEVER FEAR BUT BE SURE YOU DON'T SHOW YOURSELVES TILL I FIRE THE DOCTOR SOON JOINED THE OLD BOATSWAIN BEHIND THE HUMMOCK AND TOLD HIM WHAT THEY HAD BEEN DOING. THE BEAR WAS STILL THERE BUT MOVING RESTLESSLY ABOUT AS IF HE FELT THE APPROACH OF DANGER IN A QUARTER OF AN HOUR OR SO THE SEAL MADE HIS APPEARANCE ON THE ICE HE HAD GONE A GOOD WAY ROUND SO AS TO COME ON THE BEAR BY SURPRISE. AND EVERY MOVEMENT WAS SO PERFECT AN IMITATION OF A SEAL THAT EVEN THE DOCTOR WOULD HAVE BEEN DECEIVED IF HE HAD NOT KNOWN IT WAS HATTERAS IT IS CAPITAL SAID JOHNSON IN A LOW VOICE THE BEAR HAD INSTANTLY CAUGHT SIGHT OF THE SUPPOSED SEAL FOR HE GATHERED HIMSELF UP. PREPARING TO MAKE A SPRING AS THE ANIMAL CAME NEARER. BRUIN WENT TO WORK WITH EXTREME PRUDENCE THOUGH HIS EYES GLARED WITH GREEDY DESIRE TO CLUTCH THE COVETED PREY FOR HE HAD PROBABLY BEEN FASTING A MONTH IF NOT TWO HE ALLOWED HIS VICTIM TO GET WITHIN TEN PACES OF HIM AND THEN SPRANG FORWARD WITH A TREMENDOUS BOUND. BUT STOPPED SHORT STUPEFIED AND FRIGHTENED WITHIN THREE STEPS OF HATTERAS WHO STARTED UP THAT MOMENT AND THROWING OFF HIS DISGUISE KNELT ON ONE KNEE AND AIMED STRAIGHT AT THE BEAR'S HEART. HURRYING TOWARDS HATTERAS FOR THE BEAR HAD REARED ON HIS HIND LEGS AND WAS STRIKING THE AIR WITH ONE PAW AND TEARING UP THE SNOW TO STANCH HIS WOUND WITH THE OTHER HATTERAS NEVER MOVED BUT WAITED KNIFE IN HAND. HE HAD AIMED WELL AND FIRED WITH A SURE AND STEADY AIM BEFORE EITHER OF HIS COMPANIONS CAME UP HE HAD PLUNGED THE KNIFE IN THE ANIMAL'S THROAT AND MADE AN END OF HIM FOR HE FELL DOWN AT ONCE TO RISE NO MORE."
 ]
 concatenated_string = " ".join(reference)
 reference = [concatenated_string]
 
 model_names=[]
+
+
 # --------- stt_en_fastconformer_transducer_large_ls--------------------
 model_name = "stt_en_fastconformer_transducer_large_ls"
 dict_list = [
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "all i am good soon good yes i have to encounter my task i have so clever to be termed a person payment premiums to die out insurance o king that sounds interesting can you give me a court for to coate you i am going to pay four hundred dollars it sounds good can i think of what he doesn't guess that you o kane for your time i will listen to your offer and the great thing"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "i wondering if i could look an appointment for a hair cut i was thinking about next thursday at two p m would that be available graham can please book that on me ah my name is genafer my sole number is four one five one three one to nine no that's all thank you"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in running salon this is that speaking how may i ask you see to day of course i'd be happy to help you with that can you please tell me the date and the time that works for you ah let me take our schedule for you yet we have an opening for the hair cut at two p m next thursday certainly may i have your name please a perfect jonoffer i have booked you a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jonather will look forward to see you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "the moon this is so the speaking how may i help you kiss her can you please provide me with booty ah this is because during the night there is a lot of moor traffic my suspicion is to send you a new router that will be more powerful i will inform our technical scheme to visit you and implinment a new router could you please provide me with your address mister yonden thank you would next you say at epithet would you thanks for your call miss yonder have an i stay then you should end the callers with"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hellas my name is moved in yon and i am collink because we have issues with our infancy connexion sure during the day our infanic is first but during the night the connexion is very dead what could you what could cause that what we should do in this case this sounds great o kay its bar secret panic ismble yes it's one i will be at home at that time thank you for your time sold thanks i can"}
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0000.wav", "pred_text": "chapter five the seal and the bear you know doctor said hatteras as they returned to the hut the polar bears subsist almost entirely on seals they'll lie in wait for them beside the crevasses for whole days"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0001.wav", "pred_text": "ready to strangle them the moment their heads appear above the surface it is not likely then that a bear will be frightened of a seal i think i see what you are after but it is dangerous"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0002.wav", "pred_text": "yes but there is more chance of success than in trying any other plan so i mean to risk it i am going to dress myself in the seal's skin and creep along the ice come don't let us lose time load the gun and give it me"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0003.wav", "pred_text": "the doctor could not say anything for he would have done the same himself so he followed hatteras silently to the sledge taking with him a couple of hatchets for his own and johnson's use hatteras soon made his toilette and slipped into the skin"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0004.wav", "pred_text": "now then give me the gun he said"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0005.wav", "pred_text": "courage hatteras said the doctor handing him the weapon which he had carefully loaded meanwhile never fear but be sure you don't show yourselves till i fire the doctor soon joined the old boatswain behind the hummock and told him what they had been doing"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0006.wav", "pred_text": "the bear was still there but moving restlessly about as if he felt the approach of danger in a quarter of an hour or so the seal made his appearance on the ice he had gone a good way round so as to come on the bear by surprise"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0007.wav", "pred_text": "and every movement was so perfect an imitation of a seal that even the doctor would have been deceived if he had not known it was hatteras it is capital said johnson in a low voice the bear had instantly caught sight of the supposed seal for he gathered himself up"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0008.wav", "pred_text": "preparing to make a spring as the animal came nearer"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0009.wav", "pred_text": "bruin went to work with extreme prudence though his eyes glared with greedy desire to clutch the coveted prey for he had probably been fasting a month if not two he allowed his victim to get within ten paces of him and then sprang forward with a tremendous bound"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0010.wav", "pred_text": "but stopped short stupefied and frightened within three steps of hatteras who started up that moment and throwing off his disguise knelt on one knee and aimed straight at the bear's heart"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0011.wav", "pred_text": "hurrying towards hatteras for the bear had reared on his hind legs and was striking the air with one paw and tearing up the snow to stanch his wound with the other hatteras never moved but waited knife in hand"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0012.wav", "pred_text": "he had aimed well and fired with a sure and steady aim before either of his companions came up he had plunged the knife in the animal's throat and made an end of him for he fell down at once to rise no more"}
+
 ]
 stt_en_fastconformer_transducer_large_ls_hypothesis = [d["pred_text"] for d in dict_list]
 
 concatenated_string = " ".join(stt_en_fastconformer_transducer_large_ls_hypothesis)
 model_text_name = [[concatenated_string],model_name]
 model_names.append(model_text_name)
+execution_times = []
+stt_en_fastconformer_transducer_large_ls = ('GPU', 5.918583869934082)
+execution_times.append(stt_en_fastconformer_transducer_large_ls)
 
 # --------- stt_en_squeezeformer_ctc_medium_ls--------------------
 model_name = "stt_en_squeezeformer_ctc_medium_ls"
 dict_list = [
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "i'm good thank you shoo gore yes i an intuent courch for macca i have recovered et hundred peruson payment premions with a young insuance oke shu that's sound a god thing carrying you me a clok for the coach you offered shou i'm going to pay four hundred dollars amout that sounds good can i think of moty them get b you o ke thank you for your time i will get them the comte to your offer in a goot day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hay i'm not wondering if i could book an appointment for a hair cuf i was thinking about next thurday at two p m would that be available gregg can i please book that for me ah my name is jenafer sure my fn number is four one five five one three one one three nine now that's all thank you"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry inrundsalon this is mad speaking i may i assue you to day of course i'd be happy to help you with that kin it please tell me the date and the time that works for you ah let me check our schedule for you yet we have an opening for a hair cut at two p m next thursdays certainly may i have your name please a perfect jenfor i have booked you in a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jenfor will look forward to seeing you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "s nooon this is so the speaking how may i help you a kiss her coul you please provide me with boody gills ah this is because during the niight there' is a lot of more traffic o kas my supicion is to sgnd you a new rout that will be more powerful i will inform aur technical team to visit you and implement a new router kiss could you please provide me with your address mister yondem thank you would you would but next tuesday at tree p m s would you thanks for your call mister yondam have a nice day theing you should haend the call we"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "heathersolves my name is ing yon them and i'm coling because we have issues with our intanite conniction sure doing to day our intenc is best but doing to night's the conniction is very bad what could you what could kalls death what we should do in this case this sounds great okaye it's bar sitre pandic stumble yes it's fine i'll be at home at that time thank you for your time sauls thanks by okaye"}
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0000.wav", "pred_text": "chapter five the seal and the bear you know doctor said hatteras as they returned to the hut the polar bears subsist almost entirely on seals they'll lie in wait for them beside the crevasss for whole days"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0001.wav", "pred_text": "ready to strangle them the moment their heads appear above the surface it is not likely then that a bear will be frightened of a seal i think i see what you are after but it is dangerous"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0002.wav", "pred_text": "yes but there is more chance of success than in trying any other plan so i mean to risk it i am going to dress myself in the seal's skin and creep along the ice come don't let us lose time load the gun and give it me"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0003.wav", "pred_text": "the doctor could not say anything for he would have done the same himself so he followed hatteras silently to the sledge taking with him a couple of hatchets for his own and johnson's use hatteras soon made his toilet and slipped into the skin"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0004.wav", "pred_text": "now then give me the gun he said"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0005.wav", "pred_text": "courage hatteras said the doctor handing him the weapon which he had carefully loaded meanwhile never fear but be sure you don't show yourselves till i fire the doctor soon joined the old boatswain behind the hummock and told him what they had been doing"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0006.wav", "pred_text": "the bear was still there but moving restlessly about as if he felt the approach of danger in a quarter of an hour or so the seal made his appearance on the ice he had gone a good way round so as to come on the bear by surprise"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0007.wav", "pred_text": "and every movement was so perfect an imitation of a seal that even the doctor would have been deceived if he had not known it was hatteras it is capital said johnson in a low voice the bear had instantly caught sight of the supposed seal for he gathered himself up"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0008.wav", "pred_text": "preparing to make a spring as the animal came nearer"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0009.wav", "pred_text": "bruin went to work with extreme prudence though his eyes glared with greedy desire to clutch the coveted prey for he had probably been fasting a month if not two he allowed his victim to get within ten paces of him and then sprang forward with a tremendous bound"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0010.wav", "pred_text": "but stopped short stupefied and frightened within three steps of hatteras who started upt that moment and throwing off his disguise knelt on one knee and aimed straight at the bear's heart"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0011.wav", "pred_text": "hurrying towards hatteras for the bear had reared on his hind legs and was striking the air with one paw and tearing up the snow to stanch his wound with the other hatteras never moved but waited knife in hand"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0012.wav", "pred_text": "he had aimed well and fired with a sure and steady aim before either of his companions came up he had plunged the knife into the animal's throat and made an end of him for he fell down at once to rise no more"},
+
 ]
 concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
 model_text_name = [[concatenated_string], model_name]
 model_names.append(model_text_name)
-
+stt_en_squeezeformer_ctc_medium_ls = ('GPU', 4.086786270141602)
+execution_times.append(stt_en_squeezeformer_ctc_medium_ls)
 
 # --------- stt_en_squeezeformer_ctc_small_medium_ls--------------------
 model_name = "stt_en_squeezeformer_ctc_small_medium_ls"
 dict_list = [
-
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "thk i'm good think you so goh yes i cany soonscoage from my cak i have s covered eight hundred person payment premiums all's insurance oku sir that soundth interesting can you give me a cut for the cowarge you offered sir i'm toing to pay four hundred dollars a month that sounds good can i think of wat you doan get b too ok thinty for your tipe i will desen the coster your offer e thegate day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "a i am wondering if i could book in appointment for a hair cup i was thinking about next thurday at two p m would that be available grace can please loook that for me and my name is  genifer sure my whole number is four one five five month three one one three nine no that's all thank you it"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in ronsalon this is me speaking i may sus you to day of course id be happy to help you with that can it please tell me the date and the time that works for you ah let me chacke our schedule for you yes we have an opening for an hair cut at two p m next thursdays certainly may i have your name please ah perfect jenfer i have booked you an hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcom jeniter will look forward to see you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "the noon this is so the speaking how may i help you kasir could you please provide me with boytils this is because doing the nice there's a lot of more traffic o kase my sufficient is to sign you a new router that will be more powerful i will inform our technical teme to visit you and emblement the new router kis could you please provide me with your address mister yndham thank you would you what next w say at three p ms would you thanks for your called mister youdam have a nice day then you retan the callz with"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hel us aveds my name is meeting yonderm and i am calling because we have issued with our intenite conniction sure during the day our intenit is fst but during the night the connection is well bad what could you what could cause that what we should do in this case this sounds great o k its barst treat pandic is stumble yes its fine i will be at home at that time thank you for your time sot thanks by o kane"}
-
-]
-concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
-model_text_name = [[concatenated_string], model_name]
-model_names.append(model_text_name)
-
-
-# --------- stt_en_squeezeformer_ctc_medium_ls--------------------
-model_name = "stt_en_squeezeformer_ctc_medium_ls"
-dict_list = [
-
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "i'm good thank you shoo gore yes i an intuent courch for macca i have recovered et hundred peruson payment premions with a young insuance oke shu that's sound a god thing carrying you me a clok for the coach you offered shou i'm going to pay four hundred dollars amout that sounds good can i think of moty them get b you o ke thank you for your time i will get them the comte to your offer in a goot day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hay i'm not wondering if i could book an appointment for a hair cuf i was thinking about next thurday at two p m would that be available gregg can i please book that for me ah my name is jenafer sure my fn number is four one five five one three one one three nine now that's all thank you"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry inrundsalon this is mad speaking i may i assue you to day of course i'd be happy to help you with that kin it please tell me the date and the time that works for you ah let me check our schedule for you yet we have an opening for a hair cut at two p m next thursdays certainly may i have your name please a perfect jenfor i have booked you in a hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcome jenfor will look forward to seeing you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "s nooon this is so the speaking how may i help you a kiss her coul you please provide me with boody gills ah this is because during the niight there' is a lot of more traffic o kas my supicion is to sgnd you a new rout that will be more powerful i will inform aur technical team to visit you and implement a new router kiss could you please provide me with your address mister yondem thank you would you would but next tuesday at tree p m s would you thanks for your call mister yondam have a nice day theing you should haend the call we"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "heathersolves my name is ing yon them and i'm coling because we have issues with our intanite conniction sure doing to day our intenc is best but doing to night's the conniction is very bad what could you what could kalls death what we should do in this case this sounds great okaye it's bar sitre pandic stumble yes it's fine i'll be at home at that time thank you for your time sauls thanks by okaye"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0000.wav", "pred_text": "chapter five the seal and the bear you know doctor said hatteras as they returned to the hut the polar bears subsist almost entirely on seals they'll lie in wait for them beside the crevasses for whole days"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0001.wav", "pred_text": "ready to strangle them the moment their heads appear above the surface it is not likely then that a bear will be frightened of a seal i think i see what you are after but it is dangerous"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0002.wav", "pred_text": "yes but there is more chance of success than in trying any other plan so i mean to risk it i am going to dress myself in the seal's skin and creep along the ice come don't let us lose time load the gun and give it to me"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0003.wav", "pred_text": "the doctor could not say anything for he would have done the same himself so he followed hatteras silently to the sledge taking with him a couple of hatchets for his own and johnson's use hatteras soon made his toilette and slipped into the skin"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0004.wav", "pred_text": "now then give me the gun he said"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0005.wav", "pred_text": "courage hatteras said the doctor handing him the weapon which he had carefully loaded meanwhile never fear but be sure you don't show yourselves till i fire the doctor soon joined the old boatswain behind the hummock and told him what they had been doing"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0006.wav", "pred_text": "the bear was still there but moving restlessly about as if he felt the approach of danger in a quarter of an hour or so the seal made his appearance on the ice he had gone a good way round so as to come on the bear by surprise"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0007.wav", "pred_text": "and every movement was so perfect an imitation of a seal that even the doctor would have been deceived if he had not known it was hatteras it is capital said johnson in a low voice the bear had instantly caught sight of the supposed seal for he gathered himself up"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0008.wav", "pred_text": "preparing to make a spring as the animal came nearer"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0009.wav", "pred_text": "bruin went to work with extreme prudence though his eyes glared with greedy desire to clutch the coveted prey for he had probably been fasting a month if not two he allowed his victim to get within ten paces of him and then sprang forward with a tremendous bound"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0010.wav", "pred_text": "but stopped short stupefied and frightened within three steps of hatteras who started up at that moment and throwing off his disguise knelt on one knee and aimed straight at the bear's heart"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0011.wav", "pred_text": "hurrying towards hatteras for the bear had reared on his hind legs and was striking the air with one paw and tearing up the snow to stanch his wound with the other hatteras never moved but waited knife in hand"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0012.wav", "pred_text": "he had aimed well and fired with a sure and steady aim before either of his companions came up he had plunged the knife into the animal's throat and made an end of him for he fell down at once to rise no more"},
 
 ]
 concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
 model_text_name = [[concatenated_string], model_name]
 model_names.append(model_text_name)
-
-
-# --------- stt_en_squeezeformer_ctc_small_medium_ls--------------------
-model_name = "stt_en_squeezeformer_ctc_small_medium_ls"
-dict_list = [
-
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "thk i'm good think you so goh yes i cany soonscoage from my cak i have s covered eight hundred person payment premiums all's insurance oku sir that soundth interesting can you give me a cut for the cowarge you offered sir i'm toing to pay four hundred dollars a month that sounds good can i think of wat you doan get b too ok thinty for your tipe i will desen the coster your offer e thegate day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "a i am wondering if i could book in appointment for a hair cup i was thinking about next thurday at two p m would that be available grace can please loook that for me and my name is  genifer sure my whole number is four one five five month three one one three nine no that's all thank you it"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in ronsalon this is me speaking i may sus you to day of course id be happy to help you with that can it please tell me the date and the time that works for you ah let me chacke our schedule for you yes we have an opening for an hair cut at two p m next thursdays certainly may i have your name please ah perfect jenfer i have booked you an hair cut at two p m next thursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with to day your welcom jeniter will look forward to see you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "the noon this is so the speaking how may i help you kasir could you please provide me with boytils this is because doing the nice there's a lot of more traffic o kase my sufficient is to sign you a new router that will be more powerful i will inform our technical teme to visit you and emblement the new router kis could you please provide me with your address mister yndham thank you would you what next w say at three p ms would you thanks for your called mister youdam have a nice day then you retan the callz with"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hel us aveds my name is meeting yonderm and i am calling because we have issued with our intenite conniction sure during the day our intenit is fst but during the night the connection is well bad what could you what could cause that what we should do in this case this sounds great o k its barst treat pandic is stumble yes its fine i will be at home at that time thank you for your time sot thanks by o kane"}
-
-
-]
-concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
-model_text_name = [[concatenated_string], model_name]
-model_names.append(model_text_name)
-
+stt_en_squeezeformer_ctc_small_medium_ls = ('GPU', 3.4562795162200928)
+execution_times.append(stt_en_squeezeformer_ctc_small_medium_ls)
 
 
 # --------- stt_en_squeezeformer_ctc_xsmall_ls--------------------
 model_name = "stt_en_squeezeformer_ctc_xsmall_ls"
 dict_list = [
 
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "his so and g pinko shu god yes i any surecot for my caf if cover to be hundred person payment premium fe ianysuren oke sho that sound thing can you give me a court for the cowage you offeren shu i'mjured to pa four hundred dollar semon the sas good can i think in what is don get b to you oke thank you for your pi i will detm thecoster your ofer and thegat the"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "i i wdering if i could book in appointment for a haar cuck i was thinking a bll next thursday at two p would that be alaisable great please wok that for me a my name is deinefer sure my to number is four one five five mon three onn onn three nine no that'soll thank you e"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning think of her calling dry in ransalon this is me speaking ame as you see to day of course i be happy to help you with that can it please tell me the date and the time that works for you ah let me take our schedule for you yet we have an opening for an hair cut at two p m next thursdays certainly may i have your name please ah perfect enefer i have booked you and hair cut at two p m nextursday may i have your full number in case we need to reach you thank you i have your appointment confirmed and your contact in formation on file is there anything else i can help you out with to day your loelcomejenefer will look forward to see you nextursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "non this is so speaking how may i help you casir cll you please provide me with botils ah this is because doing the nis there is a lot of more praffic o case for my sufficient is to saen you a new uter that will be more powerful i will inform myur tetnicl tem to visit you an implement that new router iif could you please provide me with your address monsi ondem thank you woud to w wa next you sy a de pi ms wout you thank for your call moseandem have an i stay ding you return the calls with"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "he oselves my name is meet nundam and i am calling because we the issues with our intenite conniction should during the day our intenity is fed but doing the nights the conniction is were bed what could you what could call dea what we should do in the stage this sounds grade oke its bars to treat pandig stumb yes spine i will be at home at that time thank you for your time sos thank by okin"}
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0000.wav", "pred_text": "chapter five the seal and the bear you know doctor said hatteras as they returned to the hut the polar bearsubsist almost entirely on seals they'll lie and wait for them beside the crevices for whole days"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0001.wav", "pred_text": "ready to strangle them the moment their heads appear above the surface it is not likely then that a bear will be frightened of a seal i think i see what you are after but it is dangerous"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0002.wav", "pred_text": "yes but there is more chance of success than in trying any other plan so i mean to risk it i am going to dress myself in the seal's skin and creep along the ice come don't let us lose time load the gun and give it to me"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0003.wav", "pred_text": "the doctor could not say anything for he would have done the same himself so he followed hatteras silently to the sledge taking with him a couple of hatchets for his own in johnson's use hatteras soon made his toilette and slipped into the skin"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0004.wav", "pred_text": "now then give me the gun he said"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0005.wav", "pred_text": "courage hatteras said the doctor handing him the weapon which he had carefully loaded meanwhile never fear but be sure you don't show yourselves till i fire the doctor soon joined the old boat swain behind the hummock and told him what they had been doing"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0006.wav", "pred_text": "the bear was still there but moving restlessly about as if he felt the approach of danger in a quarter of an hour or so the seal made his appearance on the ice he had gone a good way round so as to come on the bear by surprise"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0007.wav", "pred_text": "and every movement was so perfect an imitation of a seal that even the doctor would have been deceived if he had not known it was hatteras it is capital said johnson in a low voice the bear had instantly caught sight of the supposed seal for he gathered himself up"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0008.wav", "pred_text": "preparing to make a spring as the animal came nearer"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0009.wav", "pred_text": "brewin went to work with extreme prudence though his eyes glared with greedy desire to clutch the coveted prey for he had probably been fasting a month if not to he allowed his victim to get within ten paces of him and then sprang forward with a tremendous bound"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0010.wav", "pred_text": "but stopped short stupefied and frightened within three steps of hatteras who started up at that moment and throwing off his disguise knelt on one knee and aimed straight at the bear's heart"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0011.wav", "pred_text": "hurrying towards hatteras for the bear had reared on his hind legs and was striking the air with one paw and tearing up the snow to stanch his wound with the other hatteras never moved but waited knife in hand"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0012.wav", "pred_text": "he had aimed well and fired with a sure and steady aim before either of his companions came up he had plunged the knife into the animal's throat and made an end of him for he fell down at once to rise no more"},
 
 ]
 concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
 model_text_name = [[concatenated_string], model_name]
 model_names.append(model_text_name)
+stt_en_squeezeformer_ctc_xsmall_ls = ('GPU', 3.1957037448883057)
+execution_times.append(stt_en_squeezeformer_ctc_xsmall_ls)
+
 
 # --------- SttEnFastConformerCtcLarge--------------------
 model_name = "SttEnFastConformerCtcLarge"
 dict_list = [
 
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "hello i'm good thank you sure go ahead yes i have insurance coverage for my car i have full coverage with hundred person payment premiums with a insurance okay sure that sounds interesting can you give me a quote for the coverage you are offering sure i'm currently paying four hundred dollars a month that sounds good can i think about it then get back to you okay thank you for your time i will definitely consider your offer have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hi i was wondering if i could book an appointment for a haircut i was thinking about next thursday at two p m will that be available great can you please book that for me uh my name is jennifer sure my phone number is four one five five one three one one three nine no that's all thank you"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning thank you for calling dry en run salon this is matt speaking how may i assist you today of course i'd be happy to help you with that can you please tell me the date and the time that works for you ah let me check our schedule for you yeah we have an opening for an haircut at two p m next thursday certainly may i have your name please ah perfect jennifer i have booked you in a haircut at two p m next thursday may i have your phone number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with today you're welcome jennifer we look forward to seeing you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "this is so the speaking how may i help you ok sir could you please provide me with bo details this is because during the nights there's a lot of more traffic ok so my suffient is to send you a new router that will be more powerful i will inform our technical team to visit you and implement a new router could you please provide me with your address mr you on them thank you would what next tuesday at three p m suit you thanks for your call miss on them have a nice day think you should end the call as well"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hello sul my name is moon and i'm calling because we have issues with our internet connection sure during the day our internet is fast but during the night the connection is very bad what could you what could cause that what we should do in this case this sounds great ok it's bar city treat paendic istanbul yes it's fine i will be at home at that time thank you for your time so thanks by okay"}
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0000.wav", "pred_text": "chapter five the seal and the bear you know doctor said hatteras as they returned to the hut the polar bears subsist almost entirely on seals they'll lie and wait for them beside the crevices for whole days"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0001.wav", "pred_text": "ready to strangle them the moment their heads appear above the surface it is not likely then that a bear will be frightened of a seal i think i see what you are after but it is dangerous"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0002.wav", "pred_text": "yes but there is more chance of success than in trying any other plan so i mean to risk it i am going to dress myself in the seal's skin and creep along the ice come don't let us lose time load the gun and give it to me"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0003.wav", "pred_text": "the doctor could not say anything for he would have done the same himself so he followed hatteras silently to the sledge taking with him a couple of hatchets for his own and johnson's use hatteras soon made his toilet and slipped into the skin"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0004.wav", "pred_text": "now then give me the gun he said"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0005.wav", "pred_text": "courage hatteras said the doctor handing him the weapon which he had carefully loaded meanwhile never fear but be sure you don't show yourselves till i fire the doctor soon joined the old boatswain behind the hummock and told him what they had been doing"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0006.wav", "pred_text": "the bear was still there but moving restlessly about as if he felt the approach of danger in a quarter of an hour or so the seal made his appearance on the ice he had gone a good way round so as to come on the bear by surprise"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0007.wav", "pred_text": "and every movement was so perfect an imitation of a seal that even the doctor would have been deceived if he had not known it was hatteras it is capital said johnson in a low voice the bear had instantly caught sight of the supposed seal for he gathered himself up"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0008.wav", "pred_text": "preparing to make a spring as the animal came nearer"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0009.wav", "pred_text": "bruin went to work with extreme prudence though his eyes glared with greedy desire to clutch the coveted prey for he had probably been fasting a month if not two he allowed his victim to get within ten paces of him and then sprang forward with a tremendous bound"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0010.wav", "pred_text": "but stopped short stupefied and frightened within three steps of hatteras who started up at that moment and throwing off his disguise knelt on one knee and aimed straight at the bear's heart"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0011.wav", "pred_text": "hurrying towards hatteras for the bear had reared on his hind legs and was striking the air with one paw and tearing up the snow to stanch his wound with the other hatteras never moved but waited knife in hand"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0012.wav", "pred_text": "he had aimed well and fired with a sure and steady aim before either of his companions came up he had plunged the knife into the animal's throat and made an end of him for he fell down at once to rise no more"},
 
 ]
 concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
 model_text_name = [[concatenated_string], model_name]
 model_names.append(model_text_name)
-
-
+SttEnFastConformerCtcLarge = ('GPU', 8.587157487869263)
+execution_times.append(SttEnFastConformerCtcLarge)
 
 # --------- SttEnFastConformerTransducerLarge--------------------
 model_name = "SttEnFastConformerTransducerLarge"
 dict_list = [
 
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\1snipln0j6obdfsbeqhv_1_TFS_101011.wav", "pred_text": "hello i'm good thank you sure go ahead yes i have insurance coverage for my car i have full coverage with hundred percent payment premiums with aliens insurance okay sure that sounds interesting can you give me a quote for the coverage you are offering sure i'm trying to pay four hundred dollars a month good can i think about it and get back to ok thank you for your time i will definitely consider your offer and a great"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_101011.wav", "pred_text": "hi i was wondering if i could book an appointment for a haircut i was thinking about next thursday at two p m would that be available for me my name is jennifer my phone number is four one five one three one one three nine"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\d3nn9h1jsqje8dv9v0pq_1_TFS_400059.wav", "pred_text": "good morning thank you for calling dry enron salon this is matt speaking how may i assist you today of course i'd be happy to help you with that can you please tell me the date and the time that works for you let me check our schedule for you yeah we have an opening for a haircut at two p m next thursday certainly may i have your name please perfect jennifer i have booked you a haircut at two p m next thursday may i have your phone number in case we need to reach you thank you i have your appointment confirmed and your contact information on file is there anything else i can help you out with today you're welcome jennifer we'll look forward to seeing you next thursday have a great day"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_1_TFS_600004.wav", "pred_text": "this is so the speaking i help you can you please provide me with body bills this is because during the knife there's a lot of more traffic my sufficient is to send you a new router that will be more powerful i will inform our technical team to visit you and implement a new route could you please provide me with your address mr yonder thank you next tuesday pm for your call missing on them have a nice day should and the call as well"},
-{"audio_filepath": "C:\\\\Users\\\\saadn\\\\PycharmProjects\\\\DATA\\utr7lk3r1qfnjhcp41f7_600002.wav", "pred_text": "hello my name is and i'm calling because we have issues with our internet connection sure during the day our internet is fast but during tonight the connection is very bad what could you what could cause that what we should do in this case panic istanbul yes it's fine i will be at home at that time thank you for your time thanks"}
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0000.wav", "pred_text": "chapter five the seal and the bear you know doctor said hatteras as they returned to the hut the polar bears subsist almost entirely on seals they'll lie in wait for them beside the crevices for whole days"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0001.wav", "pred_text": "ready to strangle them the moment their heads appear above the surface it is not likely then that a bear will be frightened of a seal i think i see what you are after but it is dangerous"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0002.wav", "pred_text": "yes but there is more chance of success than in trying any other plan so i mean to risk it i am going to dress myself in the seal's skin and creep along the ice come don't let us lose time load the gun and give it to me"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0003.wav", "pred_text": "the doctor could not say anything for he would have done the same himself so he followed hatteras silently to the sledge taking with him a couple of hatchets for his own and johnson's use hatteras soon made his toilet and slipped into the skin"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0004.wav", "pred_text": "now then give me the gun he said"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0005.wav", "pred_text": "courage hatteras said the doctor handing him the weapon which he had carefully loaded meanwhile never fear but be sure you don't show yourselves till i fire the doctor soon joined the old boatswain behind the hummock and told him what they had been doing"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0006.wav", "pred_text": "the bear was still there but moving restlessly about as if he felt the approach of danger in a quarter of an hour or so the seal made his appearance on the ice he had gone a good way round so as to come on the bear by surprise"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0007.wav", "pred_text": "and every movement was so perfect in imitation of a seal that even the doctor would have been deceived if he had not known it was hatteras it is capital said johnson in a low voice the bear had instantly caught sight of the supposed seal for he gathered himself up"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0008.wav", "pred_text": "preparing to make a spring as the animal came nearer"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0009.wav", "pred_text": "bruin went to work with extreme prudence though his eyes glared with greedy desire to clutch the coveted prey for he had probably been fasting a month if not two he allowed his victim to get within ten paces of him and then sprang forward with a tremendous bound"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0010.wav", "pred_text": "but stopped short stupefied and frightened within three steps of hatteras who started up at that moment and throwing off his disguise knelt on one knee and aimed straight at the bear's heart"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0011.wav", "pred_text": "hurrying towards hatteras for the bear had reared on his hind legs and was striking the air with one paw and tearing up the snow to stanch his wound with the other hatteras never moved but waited knife in hand"},
+{"audio_filepath": "C:\\Users\\saadn\\PycharmProjects\\DATA\\295000_wav_files\\8765-295000-0012.wav", "pred_text": "he had aimed well and fired with a sure and steady aim before either of his companions came up he had plunged the knife into the animal's throat and made an end of him for he fell down at once to rise no more"},
 
 ]
 concatenated_pred_text = ' '.join(d['pred_text'] for d in dict_list)
 model_text_name = [[concatenated_string], model_name]
 model_names.append(model_text_name)
+SttEnFastConformerTransducerLarge = ('GPU', 7.846684455871582)
+execution_times.append(SttEnFastConformerTransducerLarge)
 
-wer = []
-for model_name in model_names:
-    wer = word_error_rate(hypotheses=model_name[0], references=reference)
-# create a pandas dataframe with two columns model name and wer and append it to the csv file
+
+# create a dictionary and append it with model name and its wer then create a pandas dataframe with two columns model name and wer and save it to the csv file
+results = {}
+wers = []
+ref = []
+hyp=[]
+m_name = []
+device = []
+exec_time = []
+
+def wer(reference, hypothesis):
+    # Tokenize the input strings
+    ref_tokens = reference.split()
+    hyp_tokens = hypothesis.split()
+
+    # Initialize the edit distance matrix
+    d = [[0] * (len(hyp_tokens) + 1) for _ in range(len(ref_tokens) + 1)]
+
+    # Populate the first row and column
+    for i in range(len(ref_tokens) + 1):
+        d[i][0] = i
+    for j in range(len(hyp_tokens) + 1):
+        d[0][j] = j
+
+    # Calculate the edit distance matrix
+    for i in range(1, len(ref_tokens) + 1):
+        for j in range(1, len(hyp_tokens) + 1):
+            substitution_cost = 0 if ref_tokens[i - 1] == hyp_tokens[j - 1] else 1
+            d[i][j] = min(
+                d[i - 1][j] + 1,  # deletion
+                d[i][j - 1] + 1,  # insertion
+                d[i - 1][j - 1] + substitution_cost,  # substitution
+            )
+
+    # Calculate the WER
+    wer = d[len(ref_tokens)][len(hyp_tokens)] / len(ref_tokens)
+    return wer
+
+
+for model_name, device_exec_time in zip(model_names, execution_times):
+    # wer.append(word_error_rate(hypotheses=model_name[0], references=reference))
+    wers.append(wer(reference[0], model_name[0][0]))
+    m_name.append(model_name[1])
+    device.append(device_exec_time[0])
+    exec_time.append(device_exec_time[1])
+    hyp.append(model_name[0])
+    ref.append(reference)
+
+results['model_name'] = m_name
+results['wer'] = wer
+# results['hyp'] = hyp
+# results['ref'] = ref
+results['device'] = device
+results['exec_time'] = exec_time
+# create a pandas dataframe using results and save it to csv file
+df = pd.DataFrame(results)
+df.to_csv('STT_Libri_Experiments_Analysis.csv', index=False)

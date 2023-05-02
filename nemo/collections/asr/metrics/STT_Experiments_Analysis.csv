@@ -1,0 +1,8 @@
+model_name,wer,device,exec_time
+stt_en_fastconformer_transducer_large_ls,0.32842105263157895,GPU,13.2501540184021
+stt_en_squeezeformer_ctc_medium_ls,0.32842105263157895,CPU,51.278172969818115
+stt_en_squeezeformer_ctc_small_medium_ls,0.32842105263157895,CPU,34.854644536972046
+stt_en_squeezeformer_ctc_medium_ls,0.32842105263157895,CPU,51.278172969818115
+stt_en_squeezeformer_ctc_xsmall_ls,0.32842105263157895,CPU,32.03296685218811
+SttEnFastConformerCtcLarge,0.32842105263157895,GPU,13.336719274520874
+SttEnFastConformerTransducerLarge,0.32842105263157895,GPU,13.241406917572021
